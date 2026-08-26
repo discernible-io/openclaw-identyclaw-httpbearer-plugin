@@ -4,7 +4,7 @@ import { registerBearerSessionTools, registerHttpRequestTool } from "./lib/tools
 
 export default definePluginEntry({
   id: "bearer-http",
-  name: "Bearer HTTP",
+  name: "IdentyClaw Bearer HTTP",
   description:
     "Opaque bearer session storage and authenticated HTTPS for guest APIs (no IdentyClaw passport).",
   register(api) {

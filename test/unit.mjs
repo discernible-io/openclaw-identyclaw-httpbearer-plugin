@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Unit tests for @openclaw/httpbearer (no OpenClaw gateway required).
+ * Unit tests for @identyclaw/openclaw-identyclaw-httpbearer-plugin (no OpenClaw gateway required).
  *
  * Run: npm test
  */

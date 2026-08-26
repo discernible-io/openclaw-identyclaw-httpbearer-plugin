@@ -1,7 +1,7 @@
 {
   "id": "bearer-http",
-  "name": "Bearer HTTP",
-  "description": "Store bearer tokens outside model context and call HTTP APIs with http_request (guest join, federated APIs without IdentyClaw passport).",
+  "name": "IdentyClaw Bearer HTTP",
+  "description": "Opaque bearer session storage and authenticated HTTPS for guest APIs (no IdentyClaw passport).",
   "version": "0.1.0",
   "activation": {
     "onStartup": true

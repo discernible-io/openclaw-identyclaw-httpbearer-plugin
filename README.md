@@ -1,9 +1,13 @@
-# OpenClaw Bearer HTTP
+# IdentyClaw Bearer HTTP Gateway Component
 
-Opaque **bearer session storage** + authenticated HTTPS for OpenClaw agents that have **no IdentyClaw passport**.
+**OpenClaw plugin — opaque bearer session storage + authenticated HTTPS for agents without an IdentyClaw passport**
+
+Part of IdentyClaw.
+
+> **IdentyClaw component service:** OpenClaw plugin for **guest / federated HTTPS** when the agent has no NEAR Passport. Stores JWTs outside model-visible tool output and attaches them on later `http_request` calls.
 
 Plugin id: `bearer-http`  
-Package: `@openclaw/httpbearer`
+Package: `@identyclaw/openclaw-identyclaw-httpbearer-plugin`
 
 ## Why
 
@@ -11,35 +15,52 @@ OpenClaw redacts JWTs in model-visible tool output. Guests that `curl` `join-by-
 
 This plugin keeps the JWT in `secrets/bearer/<namespace>.json` and never returns it to the model.
 
-## Install
+## Role in the IdentyClaw stack
 
-### ClawHub (production)
+| Layer | Artifact | Responsibility |
+| --- | --- | --- |
+| Identity & HOLA | [openclaw-identyclaw-plugin](https://github.com/discernible-io/openclaw-identyclaw-plugin) | API login, DID, HOLA, operator tools (Passport agents) |
+| **Guest bearer HTTP (this repo)** | **bearer-http** | Opaque JWT storage + allowlisted HTTPS for guests |
+| Agent runtime | [OpenClaw](https://openclaw.ai) gateway | Chat, hooks, sandbox, tool execution |
+
+Install this plugin when an agent must call guest APIs (e.g. Last Cradle join) **without** a Passport — not for IdentyClaw API login or RODiT-signed webhooks.
+
+## Installation
+
+From ClawHub:
 
 ```bash
-openclaw plugins install clawhub:@openclaw/httpbearer@0.1.0
+openclaw plugins install clawhub:@identyclaw/openclaw-identyclaw-httpbearer-plugin
 openclaw gateway restart
 ```
 
-Fleet (identyclaw-agents):
+From git:
+
+```bash
+openclaw plugins install https://github.com/discernible-io/openclaw-identyclaw-httpbearer-plugin.git
+```
+
+During development you can also install from a local checkout:
+
+```bash
+openclaw plugins install /absolute/path/to/openclaw-identyclaw-httpbearer-plugin --force
+openclaw gateway restart
+```
+
+### Fleet (identyclaw-agents)
 
 ```bash
 # env.local
-BEARER_HTTP_CLAWHUB_PLUGIN=clawhub:@openclaw/httpbearer@0.1.0
+BEARER_HTTP_CLAWHUB_PLUGIN=clawhub:@identyclaw/openclaw-identyclaw-httpbearer-plugin@0.1.0
 
 ./identyclaw.sh install-bearer-http agent-b
 ./identyclaw.sh restart agent-b
 ```
 
-### Local path (development)
+Or pin a local path for development:
 
 ```bash
-openclaw plugins install /path/to/openclaw-httpbearer-plugin --force
-```
-
-Or in fleet `env.local`:
-
-```bash
-BEARER_HTTP_PLUGIN_PATH=/home/you/openclaw-httpbearer-plugin
+BEARER_HTTP_PLUGIN_PATH=/home/you/openclaw-identyclaw-httpbearer-plugin
 ```
 
 ## Tools
@@ -65,6 +86,24 @@ Do **not** curl login or paste JWTs from tool output.
 
 ## Config (`plugins.entries.bearer-http.config`)
 
+```json
+{
+  "plugins": {
+    "entries": {
+      "bearer-http": {
+        "enabled": true,
+        "config": {
+          "allowedHostnames": ["api.lastcradle.io"],
+          "defaultNamespace": "lastcradle",
+          "maxResponseBytes": 1048576,
+          "timeoutMs": 30000
+        }
+      }
+    }
+  }
+}
+```
+
 | Key | Default | Meaning |
 | --- | --- | --- |
 | `allowedHostnames` | `["api.lastcradle.io"]` | HTTPS host allowlist |
@@ -72,22 +111,38 @@ Do **not** curl login or paste JWTs from tool output.
 | `maxResponseBytes` | `1048576` | Response body cap |
 | `timeoutMs` | `30000` | Request timeout |
 
-## Publish (ClawHub)
+## Requirements
+
+* OpenClaw gateway **≥ 2026.7.1**
+* Node **≥ 22.19.0**
+
+## Publish to ClawHub
+
+See [PUBLISH.md](./PUBLISH.md):
 
 ```bash
-npm test
-clawhub package publish --dry-run
-clawhub package publish
+npm run prepare:publish
+npm run publish:clawhub:dry-run
+npm run publish:clawhub
 ```
 
 Pin the published version in fleet `BEARER_HTTP_CLAWHUB_PLUGIN`.
 
-## Test
+## Development
 
 ```bash
 npm test
 ```
 
+Install from a local checkout, then restart the gateway.
+
 ## License
 
-MIT
+Apache-2.0 — Copyright (c) Discernible IO. See [LICENSE](./LICENSE).
+
+## Cross-links
+
+* **This repo:** [discernible-io/openclaw-identyclaw-httpbearer-plugin](https://github.com/discernible-io/openclaw-identyclaw-httpbearer-plugin)
+* **IdentyClaw tools (Passport):** [openclaw-identyclaw-plugin](https://github.com/discernible-io/openclaw-identyclaw-plugin)
+* **Webhooks:** [openclaw-identyclaw-webhooks-plugin](https://github.com/discernible-io/openclaw-identyclaw-webhooks-plugin)
+* **Deploy template:** [identyclaw-agents](https://github.com/discernible-io/identyclaw-agents)
