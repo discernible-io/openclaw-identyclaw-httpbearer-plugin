@@ -1,0 +1,37 @@
+{
+  "id": "bearer-http",
+  "name": "Bearer HTTP",
+  "description": "Store bearer tokens outside model context and call HTTP APIs with http_request (guest join, federated APIs without IdentyClaw passport).",
+  "version": "0.1.0",
+  "activation": {
+    "onStartup": true
+  },
+  "contracts": {
+    "tools": ["http_request", "bearer_list_sessions", "bearer_clear_session"]
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "allowedHostnames": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Hostnames permitted for http_request (exact match, lowercase)."
+      },
+      "defaultNamespace": {
+        "type": "string",
+        "description": "Default bearer namespace when storeAuth.namespace is omitted."
+      },
+      "maxResponseBytes": {
+        "type": "number",
+        "minimum": 1024,
+        "description": "Maximum response body bytes to read."
+      },
+      "timeoutMs": {
+        "type": "number",
+        "minimum": 1000,
+        "description": "Default HTTP timeout in milliseconds."
+      }
+    }
+  }
+}

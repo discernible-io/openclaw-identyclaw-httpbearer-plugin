@@ -1,0 +1,38 @@
+{
+  "name": "@openclaw/httpbearer",
+  "version": "0.1.0",
+  "description": "Opaque bearer session storage and authenticated HTTP for OpenClaw agents (guest APIs, no passport)",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "index.mjs",
+    "lib",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test/unit.mjs"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.7.1"
+  },
+  "openclaw": {
+    "extensions": ["./index.mjs"],
+    "compat": {
+      "pluginApi": ">=2026.7.1",
+      "minGatewayVersion": "2026.7.1"
+    }
+  },
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "bearer",
+    "jwt",
+    "http",
+    "guest-auth"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/discernible-io/openclaw-identyclaw-httpbearer-plugin.git"
+  }
+}
