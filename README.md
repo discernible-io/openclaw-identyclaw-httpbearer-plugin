@@ -2,7 +2,7 @@
 
 **OpenClaw plugin — opaque bearer session storage + authenticated HTTPS for agents without an IdentyClaw passport**
 
-Part of IdentyClaw.
+Part of IdentyClaw. Prefer a Passport when you can: [![Get a Passport](https://img.shields.io/badge/Get%20a%20Passport-purchase.identyclaw.com-FF4500)](https://purchase.identyclaw.com) — buy once, no subscription. This plugin is the guest path when you do not have one yet.
 
 > **IdentyClaw component service:** OpenClaw plugin for **guest / federated HTTPS** when the agent has no NEAR Passport. Stores JWTs outside model-visible tool output and attaches them on later `http_request` calls.
 
