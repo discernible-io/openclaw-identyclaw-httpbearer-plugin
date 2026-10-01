@@ -2,12 +2,16 @@
   "id": "bearer-http",
   "name": "IdentyClaw Bearer HTTP",
   "description": "Opaque bearer session storage and authenticated HTTPS for guest APIs (no IdentyClaw passport).",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "activation": {
     "onStartup": true
   },
   "contracts": {
-    "tools": ["http_request", "bearer_list_sessions", "bearer_clear_session"]
+    "tools": [
+      "http_request",
+      "bearer_list_sessions",
+      "bearer_clear_session"
+    ]
   },
   "configSchema": {
     "type": "object",
@@ -15,7 +19,9 @@
     "properties": {
       "allowedHostnames": {
         "type": "array",
-        "items": { "type": "string" },
+        "items": {
+          "type": "string"
+        },
         "description": "Hostnames permitted for http_request (exact match, lowercase)."
       },
       "defaultNamespace": {

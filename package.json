@@ -1,7 +1,7 @@
 {
   "name": "@identyclaw/openclaw-identyclaw-httpbearer-plugin",
-  "version": "0.1.0",
-  "description": "OpenClaw plugin — opaque bearer session storage and authenticated HTTPS for guest APIs (no IdentyClaw passport)",
+  "version": "0.1.1",
+  "description": "OpenClaw plugin \u2014 opaque bearer session storage and authenticated HTTPS for guest APIs (no IdentyClaw passport)",
   "type": "module",
   "main": "./index.mjs",
   "files": [
@@ -37,7 +37,7 @@
   },
   "homepage": "https://www.discernible.io/#developers",
   "peerDependencies": {
-    "openclaw": ">=2026.7.1"
+    "openclaw": ">=2026.9.7"
   },
   "peerDependenciesMeta": {
     "openclaw": {
@@ -45,19 +45,22 @@
     }
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=24.16.0"
   },
   "openclaw": {
     "extensions": [
       "./index.mjs"
     ],
     "compat": {
-      "pluginApi": ">=2026.7.1",
-      "minGatewayVersion": "2026.7.1"
+      "pluginApi": ">=2026.9.7",
+      "minGatewayVersion": "2026.9.7"
     },
     "build": {
-      "openclawVersion": "2026.7.1",
-      "pluginSdkVersion": "2026.7.1"
+      "openclawVersion": "2026.9.7",
+      "pluginSdkVersion": "2026.9.7"
     }
+  },
+  "devDependencies": {
+    "openclaw": "2026.9.7"
   }
 }
